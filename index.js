@@ -1,14 +1,18 @@
 import fetch from 'node-fetch';
-import dayjs from 'dayjs';
+import Enquirer from 'enquirer';
 import dotenv from 'dotenv'
+
+const { prompt, Select } = Enquirer;
 dotenv.config()
 
 // fetch based on name and date submissions happened
 const getData = async () => {
   const data = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1myndS4dsD6B-7OzKj75SS9XwFoKguoq3QBQUMaqPEns/values/FormResponses1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEET_API}`)
   const response = await data.json();
-  const formattedData = formatData(response.values)
-  const filteredData = filterData(formattedData, '4-18-2022', 1, 'Cass', 5)
+  const formattedData = formatData(response.values);
+  const instructorAnswers = await getInstructorInput();
+  const filteredData = filterData(formattedData, ...Object.values(instructorAnswers));
+  console.log(filteredData);
 }
 
 const formatData = (responses) => {
@@ -57,6 +61,57 @@ const filterData = (data, date, mod, projectManager, project) => {
     return submission.date >= new Date(date) && submission.mod.includes(mod) && submission.projectManager.includes(projectManager.toLowerCase()) && submission.project.includes(project)
   })
   return filteredSubmissions
+}
+
+const getInstructorInput = async () => {
+  return await prompt([
+  {
+    type: 'input',
+    name: 'projectKickoffDate',
+    message: 'What date did you kick off the project?'
+  },
+  {
+    type: 'select',
+    name: 'module',
+    message: 'Which module?',
+    choices: [{
+      name: 1,
+      message: 'Mod 1',
+    }, {
+      name: 2,
+      message: 'Mod 2',
+    }, {
+      name: 3,
+      message: 'Mod 3',
+    }],
+  },
+  {
+    type: 'input',
+    name: 'projectManager',
+    message: 'Enter your name or part of your name. This will be used in a .includes for filtering based on student input.'
+  }, 
+  {
+    type: 'select',
+    name: 'project',
+    message: 'Which project is this?', 
+    choices: [{
+      name: 1,
+      message: '1 - First Solo Project',
+    }, {
+      name: 2,
+      message: '2 - Paired Project',
+    }, {
+      name: 3,
+      message: '3 - Mid-Mod Solo Challenge',
+    }, {
+      name: 4,
+      message: '4 - Group Project',
+    }, {
+      name: 5,
+      message: '5 - Final Solo Project',
+    }]
+  }
+]);
 }
 
 getData();
