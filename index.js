@@ -6,14 +6,8 @@ import shell from 'shelljs';
 const { prompt } = Enquirer;
 dotenv.config()
 
-
-// Create a Mod2/ students projects/whats-cooking/
-
-// As each one is cloned, rename it with the student name (michael-emma-dillan)
-
-// fetch based on name and date submissions happened
 const getData = async () => {
-  const data = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1myndS4dsD6B-7OzKj75SS9XwFoKguoq3QBQUMaqPEns/values/FormResponses1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEET_API}`)
+  const data = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEET_ID}/values/FormResponses1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEET_API}`)
   const response = await data.json();
   const formattedData = formatData(response.values);
   const instructorAnswers = await getInstructorInput();
@@ -54,11 +48,7 @@ const formatData = (responses) => {
     }
   })
 }
-//USER INPUTS:
-//date should be typed string m-d-y
-//mod will selected number
-//projectManager should be typed partial name string
-//project will be selected number
+
 const filterData = (data, date, mod, projectManager, project) => {
   const filteredSubmissions = data.filter((submission, index) => {
     if (!submission) {
@@ -74,7 +64,7 @@ const getInstructorInput = async () => {
   {
     type: 'input',
     name: 'projectKickoffDate',
-    message: 'What date did you kick off the project?'
+    message: 'What date did you kick off the project? (MM-DD-YYYY)'
   },
   {
     type: 'select',
@@ -121,7 +111,6 @@ const getInstructorInput = async () => {
 }
 
 const cloneDownRepos = filteredData => {
-  console.log(filteredData)
   filteredData.forEach(submission => {
     const repoName = submission.studentName.trim().replaceAll(/[,.()' ;]/g, "-");
     shell.exec(`git clone ${submission.repoLink} ${repoName}`);
