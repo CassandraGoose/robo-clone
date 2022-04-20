@@ -23,5 +23,8 @@
     "enquirer": "^2.3.6",
     "node-fetch": "^3.2.3",
     "shelljs": "^0.8.5"
+  },
+  "bin": {
+    "robo-clone": "./index.js"
   }
 }

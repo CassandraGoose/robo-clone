@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fetch from 'node-fetch';
 import Enquirer from 'enquirer';
 import dotenv from 'dotenv';
@@ -85,11 +86,11 @@ const getInstructorInput = async () => {
     type: 'input',
     name: 'projectManager',
     message: 'Enter your name or part of your name. This will be used in a .includes for filtering based on student input.'
-  }, 
+  },
   {
     type: 'select',
     name: 'project',
-    message: 'Which project is this?', 
+    message: 'Which project is this?',
     choices: [{
       name: 1,
       message: '1 - First Solo Project',
