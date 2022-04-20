@@ -20,6 +20,8 @@
   "dependencies": {
     "dayjs": "^1.11.1",
     "dotenv": "^16.0.0",
-    "node-fetch": "^3.2.3"
+    "enquirer": "^2.3.6",
+    "node-fetch": "^3.2.3",
+    "shelljs": "^0.8.5"
   }
 }

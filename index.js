@@ -1,9 +1,15 @@
 import fetch from 'node-fetch';
 import Enquirer from 'enquirer';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import shell from 'shelljs';
 
-const { prompt, Select } = Enquirer;
+const { prompt } = Enquirer;
 dotenv.config()
+
+
+// Create a Mod2/ students projects/whats-cooking/
+
+// As each one is cloned, rename it with the student name (michael-emma-dillan)
 
 // fetch based on name and date submissions happened
 const getData = async () => {
@@ -12,7 +18,7 @@ const getData = async () => {
   const formattedData = formatData(response.values);
   const instructorAnswers = await getInstructorInput();
   const filteredData = filterData(formattedData, ...Object.values(instructorAnswers));
-  console.log(filteredData);
+  cloneDownRepos(filteredData)
 }
 
 const formatData = (responses) => {
@@ -112,6 +118,17 @@ const getInstructorInput = async () => {
     }]
   }
 ]);
+}
+
+const cloneDownRepos = filteredData => {
+  console.log(filteredData)
+  filteredData.forEach(submission => {
+    const repoName = submission.studentName.trim().replaceAll(/[,.()' ;]/g, "-");
+    shell.exec(`git clone ${submission.repoLink} ${repoName}`);
+    shell.cd(`${repoName}`);
+    shell.exec(`npm i`);
+    shell.cd('..');
+  })
 }
 
 getData();
