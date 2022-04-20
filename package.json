@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CassandraGoose/fe-hackathon.git"
+    "url": "git+https://github.com/CassandraGoose/robo-clone.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CassandraGoose/fe-hackathon/issues"
+    "url": "https://github.com/CassandraGoose/robo-clone/issues"
   },
-  "homepage": "https://github.com/CassandraGoose/fe-hackathon#readme",
+  "homepage": "https://github.com/CassandraGoose/robo-clone#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
     "enquirer": "^2.3.6",
