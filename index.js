@@ -8,12 +8,17 @@ const { prompt } = Enquirer;
 dotenv.config()
 
 const getData = async () => {
-  const data = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEET_ID}/values/FormResponses1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEET_API}`)
-  const response = await data.json();
-  const formattedData = formatData(response.values);
-  const instructorAnswers = await getInstructorInput();
-  const filteredData = filterData(formattedData, ...Object.values(instructorAnswers));
-  cloneDownRepos(filteredData)
+  const [,, ...args] = process.argv;
+  if (args[0] === '--key') {
+    const data = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1myndS4dsD6B-7OzKj75SS9XwFoKguoq3QBQUMaqPEns/values/FormResponses1?valueRenderOption=FORMATTED_VALUE&key=${args[1]}`)
+    const response = await data.json();
+    const formattedData = formatData(response.values);
+    const instructorAnswers = await getInstructorInput();
+    const filteredData = filterData(formattedData, ...Object.values(instructorAnswers));
+    cloneDownRepos(filteredData)
+  } else {
+    console.log('Please include key argument! Try: `robo-clone --key KEYHERE` Tip: Ask FE Channel for key.');
+  }
 }
 
 const formatData = (responses) => {
