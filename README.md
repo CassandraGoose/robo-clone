@@ -1,7 +1,7 @@
 # Robo Clone
 
 ## Usage
-  - Run `npm install -g robo-clone`
+  - Run `npm install -g roborepo`
   - Navigate to the directory where you would like the student repos to be cloned to
   - Get the API key from the #frontend Slack channel
   - Run `robo-clone --key APIKEYHERE`
