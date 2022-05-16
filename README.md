@@ -1,5 +1,7 @@
 # Robo Clone
 
+This project is not intended for use by anyone at this time. 
+
 ## Usage
   - Run `npm install -g roborepo`
   - Navigate to the directory where you would like the student repos to be cloned to
@@ -7,6 +9,7 @@
   - Run `robo-clone --key APIKEYHERE`
   
 ## Program Overview
+(Please do not panic when you see an API key in the gif below. It has been revoked and is used for illustrative purposes only)
 ![Robo Clone](./package.gif)
 This application was built to streamline the process of cloning down students' GH repos and running installation for each of them.  Now instead of manually grabbing each link, changing directories, and running `npm i`, you can run one command to clone all of the repos you want!  Answer the questions prompted by Robo Clone and you'll have your projects up and running in no time!
 
